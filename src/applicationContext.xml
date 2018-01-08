@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<!-- Defining beans here -->
+	<!-- for loading properties in the config file. from class path -->
+	<context:property-placeholder location="classpath:sport.properties" />
+
+	<!-- Defining the dependency -->
+	<bean id="myFortuneService" class="com.atechlab.springdemo.HappyFortuneService"
+	scope="singleton">
+	</bean>
+
+	<bean id="myCoach" class="com.atechlab.springdemo.TrackCoach">
+
+		<!-- set up the constructor injection -->
+		<constructor-arg ref="myFortuneService" />
+	</bean>
+
+
+	<bean id="myCricketCoach" class="com.atechlab.springdemo.CricketCoach">
+
+		<!-- set up setter Injection -->
+		<!-- ref is meant to refer other objects and value means real , literal 
+			values. -->
+
+		<!-- Injecting the literal values -->
+		<property name="fortuneService" ref="myFortuneService"></property>
+		<property name="emailAddress" value="hardcoded-value@atechlab.net"></property>
+		<property name="headEmailAddress" value="${foo.email}"></property>
+		<property name="team" value="${foo.team}"></property>
+
+	</bean>
+
+
+</beans>
